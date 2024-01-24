@@ -5,6 +5,7 @@
 
 using namespace std;
 
+
 class userDetail;
 
 class userManager
@@ -124,40 +125,4 @@ void forgot(userDetail &obj,fstream &file) {
         cout << "Account not found or incorrect combination of username and email." << endl;
     }
 
-}
-
-
-int main()
-{
-    fstream file;
-    userDetail obj;
-    char choice;
-    cout<<"\n1. Login";
-    cout<<"\n2. Sign-Up";
-    cout<<"\n3. Forgot Password";
-    cout<<"\n4. Exit";
-    cout<<"\nEnter Your choice: ";
-    cin>>choice;
-    cin.ignore();
-
-    switch (choice)
-    {
-    case '1':
-        login(obj,file);
-        break;
-    case '2':
-        signUp(obj,file);
-        break;
-    case '3':
-        forgot(obj,file);
-        break;
-    case '4':
-        return 0;
-        break;
-    default:
-        cout<<"Invalid Choice..!";
-        break;
-    }
-    file.close();
-    return 0;
 }
