@@ -3,7 +3,8 @@
 #include<cstdlib>
 #include<string>
 #include<conio.h>
-#include <sstream>
+#include<sstream>
+#include<windows.h>
 
 using namespace std;
 
@@ -26,9 +27,6 @@ class userDetail{
     string userName;
     string email;
     string password;
-    string searchName;
-    string searchEmail;
-    string searchPass;
     streampos filePosition;
 
     public:
@@ -49,19 +47,23 @@ void activityLog(userDetail &obj,fstream &file){
     while (1)
     {
     system("CLS");
-    cout<<"Activity Log"<<endl;
+    cout<<"*******************"<<endl;
+    cout<<"*  Activity Log   *"<<endl;
+    cout<<"*******************"<<endl;
+    cout<<"* 1.Chest         *"<<endl;
+    cout<<"* 2.Triceps       *"<<endl;
+    cout<<"* 3.Back          *"<<endl;
+    cout<<"* 4.Biceps        *"<<endl;
+    cout<<"* 5.Shoulders     *"<<endl;
+    cout<<"* 6.Leg           *"<<endl;
+    cout<<"* 7.Home Page     *"<<endl;
+    cout<<"*******************"<<endl;
     cout<<"Enter the muscle group you want to target today:"<<endl;
-    cout<<"1.Chest."<<endl;
-    cout<<"2.Triceps."<<endl;
-    cout<<"3.Back."<<endl;
-    cout<<"4.Biceps."<<endl;
-    cout<<"5.Shoulders."<<endl;
-    cout<<"6.Leg."<<endl;
-    cout<<"7.Home Page"<<endl;
     cin>>choice;
     switch(choice){
         case 1:
             system("CLS");
+            cout<<"********************************"<<endl;
             cout<<"Chest Day:"<<endl;
             cout<<"1.Bench press 4x12"<<endl;
             cout<<"2.Incline Dumbbel press 4x12"<<endl;
@@ -129,7 +131,7 @@ void activityLog(userDetail &obj,fstream &file){
             cout<<endl;
             getch();
             break;
-        
+
         case 7:
             return;
 
@@ -141,17 +143,22 @@ void activityLog(userDetail &obj,fstream &file){
 }
 
 void goalSetting(userDetail &obj,fstream &file){
-    system("CLS");
     string goalWeight,time;
     double bmr;
     int choice;
     bmr=447.593+(9.247*stoi(obj.weight))+(3.098*stoi(obj.height))-(4.330*stoi(obj.age));
-    cout<<"Goal Setting"<<endl;
-    cout<<"1.Sedentary (little or no exercise)"<<endl;
-    cout<<"2.Lightly active (light exercise/sports 1-3 days/week)"<<endl;
-    cout<<"3.Moderately active (moderate exercise/sports 3-5 days/week)"<<endl;
-    cout<<"4.Very active (hard exercise/sports 6-7 days a week)"<<endl;
-    cout<<"5.Extremely active (very hard exercise/sports & physical job or 2x training)"<<endl;
+    again:
+    system("CLS");
+    cout<<"*********************************************************************************"<<endl;
+    cout<<"*                      Goal Setting                                             *"<<endl;
+    cout<<"*********************************************************************************"<<endl;
+    cout<<"*  1.Sedentary (little or no exercise)                                          *"<<endl;
+    cout<<"*  2.Lightly active (light exercise/sports 1-3 days/week)                       *"<<endl;
+    cout<<"*  3.Moderately active (moderate exercise/sports 3-5 days/week)                 *"<<endl;
+    cout<<"*  4.Very active (hard exercise/sports 6-7 days a week)                         *"<<endl;
+    cout<<"*  5.Extremely active (very hard exercise/sports & physical job or 2x training) *"<<endl;
+    cout<<"*********************************************************************************"<<endl;
+    cout<<"Enter your choice:";
     cin>>choice;
     if(choice==1){
         bmr*=1.2;
@@ -172,8 +179,10 @@ void goalSetting(userDetail &obj,fstream &file){
     }
     else{
         cout<<"Invalid choice...!"<<endl;
+        getch();
+        goto again;
     }
-
+    system("CLS");
     cout<<"Calorie intake chart"<<endl;
     cout<<"+++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
     cout<<"+   Maintain Weight +"<<"         "<<bmr<<"         +"<<endl;
@@ -203,9 +212,12 @@ void goalSetting(userDetail &obj,fstream &file){
 void progressTracking(userDetail &obj,fstream &file){
     system("CLS");
     int choice,weight;
-    cout<<"Progress Tracking"<<endl;
-    cout<<"!.Weight gain"<<endl;
-    cout<<"2.Weight Loss"<<endl;
+    cout<<"*********************"<<endl;
+    cout<<"* Progress Tracking *"<<endl;
+    cout<<"*********************"<<endl;
+    cout<<"* 1.Weight gain     *"<<endl;
+    cout<<"* 2.Weight Loss     *"<<endl;
+    cout<<"*********************"<<endl;
     cin>>choice;
     switch(choice){
         case 1:
@@ -220,15 +232,15 @@ void progressTracking(userDetail &obj,fstream &file){
         ss << intValue;
         obj.weight = ss.str();
 
-        file.seekp(obj.filePosition); 
+        file.seekp(obj.filePosition);
         file << obj.weight;
 
 
-        cout << "Weight after adding gain: " << obj.weight << endl;
-        } 
+        cout << "Your new weight is: " << obj.weight << endl;
+        }
         catch (const invalid_argument& e) {
        cerr << "Invalid argument: " << e.what() << std::endl;
-        } 
+        }
         catch (const out_of_range& e) {
        cerr << "Out of range: " << e.what() << std::endl;
         }
@@ -246,7 +258,7 @@ void progressTracking(userDetail &obj,fstream &file){
         obj.weight = ss.str();
 
 
-        cout << "Weight after adding gain: " << obj.weight << endl;
+        cout << "Your new weight is: " << obj.weight << endl;
         } catch (const invalid_argument& e) {
        cerr << "Invalid argument: " << e.what() << std::endl;
         } catch (const out_of_range& e) {
@@ -260,14 +272,121 @@ void progressTracking(userDetail &obj,fstream &file){
 }
 
 void profile(userDetail &obj,fstream &file){
-    system("CLS");
-    cout<<"Profile"<<endl;
-    cout<<"Name="<<obj.fullName<<endl;
-    cout<<"Age="<<obj.age<<endl;
-    cout<<"Weight="<<obj.weight<<endl;
-    cout<<"Height="<<obj.height<<endl;
-    cout<<"Email="<<obj.email<<endl;
-    getch();
+    string newName,newAge,newWeight,newHeight,newEmail;
+    int choice;
+    while(1){
+        system("CLS");
+        cout<<"**************************"<<endl;
+        cout<<"*       Option           *"<<endl;
+        cout<<"**************************"<<endl;
+        cout<<"* 1.View profile detail  *"<<endl;
+        cout<<"* 2.Edit profile detail  *"<<endl;
+        cout<<"* 3.Home Page            *"<<endl;
+        cout<<"**************************"<<endl;
+        cout<<"Enter your choice:";
+        cin>>choice;
+
+        switch(choice){
+            case 1:
+            system("CLS");
+            cout<<"Profile Detail"<<endl;
+            cout<<"+++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+            cout<<"+    Name       +"<<"         "<<obj.fullName<<"         +"<<endl;
+            cout<<"+++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+            cout<<"+    Age        +"<<"         "<<obj.age<<" years            +"<<endl;
+            cout<<"+++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+            cout<<"+    Weight     +"<<"         "<<obj.weight<<" kg               +"<<endl;
+            cout<<"+++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+            cout<<"+    Height     +"<<"         "<<obj.height<<" cm              +"<<endl;
+            cout<<"+++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+            cout<<"+    Email      +"<<"     "<<obj.email<<"    +"<<endl;
+            cout<<"+++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+            getch();
+            break;
+
+            case 2:
+            system("CLS");
+            int choice;
+            cout<<"Edit Profile"<<endl;
+            cout<<"+++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+            cout<<"*  1.Name       +"<<"         "<<obj.fullName<<"         +"<<endl;
+            cout<<"+++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+            cout<<"+  2.Age        +"<<"         "<<obj.age<<" years            +"<<endl;
+            cout<<"+++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+            cout<<"+  3.Weight     +"<<"         "<<obj.weight<<" kg               +"<<endl;
+            cout<<"+++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+            cout<<"+  4.Height     +"<<"         "<<obj.height<<" cm              +"<<endl;
+            cout<<"+++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+            cout<<"+  5.Email      +"<<"     "<<obj.email<<"    +"<<endl;
+            cout<<"+++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+            cout<<"+  6.Home Page                                +"<<endl;
+            cout<<"+++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+            cout<<"Enter your choice:";
+            cin>>choice;
+            cin.ignore();
+            switch(choice){
+                case 1:
+                cout<<"Enter new name:";
+                getline(cin,newName);
+                obj.fullName=newName;
+                file.seekp(obj.filePosition);
+                file << obj.fullName;
+                getch();
+                break;
+
+            case 2:
+                cout<<"Enter new age:";
+                cin>>newAge;
+                obj.fullName=newAge;
+                file.seekp(obj.filePosition);
+                file << obj.age;
+                getch();
+                break;
+
+            case 3:
+                cout<<"Enter new weight:";
+                cout<<newWeight;
+                obj.fullName=newWeight;
+                file.seekp(obj.filePosition);
+                file << obj.weight;
+                getch();
+                break;
+
+            case 4:
+                cout<<"Enter new height:";
+                cout<<newHeight;
+                obj.fullName=newHeight;
+                file.seekp(obj.filePosition);
+                file << obj.height;
+                getch();
+                break;
+
+            case 5:
+                cout<<"Enter new email:";
+                getline(cin,newEmail);
+                obj.fullName=newEmail;
+                file.seekp(obj.filePosition);
+                file << obj.email;
+                getch();
+                break;
+
+            case 6:
+                return;
+
+            default:
+                cout<<"Invalid choice...!"<<endl;
+            }
+            break;
+
+            case 3:
+            return;
+
+            default:
+            cout<<"Invalid choice...!"<<endl;
+
+        }
+    }
+
 }
 
 void welcomepage(userDetail &obj,fstream &file){
@@ -275,12 +394,16 @@ void welcomepage(userDetail &obj,fstream &file){
     {
         system("CLS");
     int choice;
-    cout<<"Welcome to Fitness Tracker\n";
-    cout<<"1.Activity Log"<<endl;
-    cout<<"2.Goal setting"<<endl;
-    cout<<"3.Progress Tracking."<<endl;
-    cout<<"4.Profile"<<endl;
-    cout<<"5.Exit."<<endl;
+    cout<<"****************************"<<endl;
+    cout<<"*Welcome to Fitness Tracker*"<<endl;
+    cout<<"****************************"<<endl;
+    cout<<"*  1.Activity Log.         *"<<endl;
+    cout<<"*  2.Goal setting.         *"<<endl;
+    cout<<"*  3.Progress Tracking.    *"<<endl;
+    cout<<"*  4.Profile.              *"<<endl;
+    cout<<"*  5.Exit.                 *"<<endl;
+    cout<<"****************************"<<endl;
+
     cout<<"Enter your choice: ";
     cin>>choice;
     switch (choice)
@@ -333,13 +456,17 @@ void signUp(userDetail &obj,fstream &file)
 }
 
 void login(userDetail &obj,fstream &file) {
-    system("CLS");
+        string searchName;
+        string searchPass;
+    int a=0;
+    do
+    {
+         system("CLS");
     cout << "--------Login--------" << endl;
     cout << "\nUserName: ";
-    getline(cin, obj.searchName);
+    getline(cin, searchName);
     cout << "Password: ";
-    getline(cin, obj.searchPass);
-
+    getline(cin,searchPass);
     file.open("loginData.txt", ios::in);
     if (!file.is_open()) {
         cerr << "Error opening file 'loginData.txt'\n";
@@ -349,26 +476,39 @@ void login(userDetail &obj,fstream &file) {
     bool found = false;
 
     while (getline(file, obj.fullName, '*') && getline(file, obj.age, '*') && getline(file, obj.weight, '*') && getline(file, obj.height, '*') && getline(file, obj.userName, '*') && getline(file, obj.email, '*') && getline(file, obj.password, '\n')) {
-        if (obj.userName == obj.searchName && obj.password == obj.searchPass) {
+        if (obj.userName == searchName && obj.password == searchPass) {
             welcomepage(obj,file);
             found = true;
             break;
+        }
+        else{
+            cout<<"Login Failed! Try Again"<<endl;
+            a++;
+            Sleep(3);
         }
     }
 
     if (!found) {
         cout << "Login failed. Incorrect username or password." << endl;
     }
+    } while (a<4);
+    if(a==4){
+        cout<<"You have entered wrong unsername or password 3 times!!!"<<endl;
+        return;
+    }
 
 }
 
 
 void forgot(userDetail &obj,fstream &file) {
+    string searchName;
+    string searchEmail;
+    string searchPass;
     system("CLS");
     cout << "\nUserName: ";
-    getline(cin, obj.searchName);
+    getline(cin, searchName);
     cout << "\nEmail: ";
-    getline(cin, obj.searchEmail);
+    getline(cin, searchEmail);
 
     file.open("loginData.txt", ios::in);
     if (!file.is_open()) {
@@ -379,7 +519,7 @@ void forgot(userDetail &obj,fstream &file) {
     bool found = false;
 
            while (getline(file, obj.fullName, '*') && getline(file, obj.age, '*') && getline(file, obj.weight, '*') && getline(file, obj.height, '*') && getline(file, obj.userName, '*') && getline(file, obj.email, '*') && getline(file, obj.password, '\n'))  {
-        if (obj.userName == obj.searchName && obj.email == obj.searchEmail) {
+        if (obj.userName == searchName && obj.email == searchEmail) {
             cout << "\nAccount Found!";
             cout << "Password: " << obj.password << endl;
             found = true;
